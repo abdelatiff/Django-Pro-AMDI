@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}model_form_upload{% endblock title %}
+{% load static %}
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-success" type="submit" value="Upload">
+
+  </form>
+
+  <p><a href="{% url 'authapp:dashboard' %}">Return to home</a></p>
+
+
+{% endblock %}
+
+

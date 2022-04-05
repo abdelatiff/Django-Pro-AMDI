@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}cart{% endblock title %}
+{% load static %}
+{% load cart_tag %}
+{% block content %}
+
+	</div>
+<link href="{% static 'authapp/css/style_cart.css' %}" rel="stylesheet">
+<div class="container padding-bottom-3x mb-1">
+    <!-- Shopping Cart-->
+    <div class="table-responsive shopping-cart">
+        <table class="w3-table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th class="text-center">Quantité</th>
+
+                    <th class="text-center">Totale</th>
+
+                </tr>
+            </thead>
+            <tbody>
+			{% for key,value in request.session.cart.items %}
+                <tr>
+                    <td>
+                        <div class="product-item">
+                            <a class="product-thumb" href="#{{value.Reference}}"><img src="{{ value.image }}" alt="Product"></a>
+                            <div class="product-info">
+                                <h4 class="product-title"><a href="#">{{value.name}}</a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="count-input">
+                            <select class="form-control">
+                                <option>{{value.quantity}}</option>
+								</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td class="text-center text-lg text-medium">{{ value.price|multiply:value.quantity }}€</td>
+                    <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
+                </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="shopping-cart-footer">
+
+
+        <div class="column text-lg">Totale : {{ request.session.cart.items|totale}}€<span class="text-medium"></span></div>
+    </div>
+
+</div>
+{% endblock content %}
