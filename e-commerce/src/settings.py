@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'authapp',
-    'bootstrap4',
-    'cart',
+    'authapp',                                                                          # Our django app
+    'bootstrap4',                                                                       # Bootstrap4 app
+    'cart',                                                                             # Shopping cart app
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'src.urls'
+ROOT_URLCONF = 'src.urls'                                                                   # Root path
 
 TEMPLATES = [
     {
@@ -123,7 +123,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_URL = '/authapp/static/'
+STATIC_URL = '/authapp/static/'                                                 # Our Static directory (image, css, javascript)
 
 
 STATICFILES_DIRS = [
@@ -132,7 +132,7 @@ STATICFILES_DIRS = [
 
 
 
-LOGIN_REDIRECT_URL = 'authapp:dashboard'
+LOGIN_REDIRECT_URL = 'authapp:dashboard'                                          # Login redirection page
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 

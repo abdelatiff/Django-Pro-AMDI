@@ -12,10 +12,10 @@
         <table class="w3-table">
             <thead>
                 <tr>
-                    <th>Produit</th>
-                    <th class="text-center">Quantité</th>
+                    <th>Product</th>
+                    <th class="text-center">Quantity</th>
 
-                    <th class="text-center">Totale</th>
+                    <th class="text-center">Total</th>
 
                 </tr>
             </thead>
@@ -25,9 +25,6 @@
                     <td>
                         <div class="product-item">
                             <a class="product-thumb" href="#{{value.Reference}}"><img src="{{ value.image }}" alt="Product"></a>
-                            <div class="product-info">
-                                <h4 class="product-title"><a href="#">{{value.name}}</a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
-                            </div>
                         </div>
                     </td>
                     <td class="text-center">
@@ -48,7 +45,7 @@
     <div class="shopping-cart-footer">
 
 
-        <div class="column text-lg">Totale : {{ request.session.cart.items|totale}}€<span class="text-medium"></span></div>
+        <div class="column text-lg">Total : {{ request.session.cart.items|totale}}€<span class="text-medium"></span></div>
     </div>
 
 </div>

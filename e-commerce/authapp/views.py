@@ -13,56 +13,54 @@ import json
 # Create your views here.
 
 @login_required
-def dashboard(request):
-    # Getting all the stuff from database
-    query_results = GraphiCards.objects.all()
-    # Creating a dictionary to pass as an argument
-    context = {'query_results': query_results}
-    return render(request, 'authapp/dashboard.html', context=context)
+def dashboard(request):                                                         # Dashboard view
+    query_results = GraphiCards.objects.all()                                   # Getting all the information from database
+    context = {'query_results': query_results}                                  # Creating a dictionary to pass as an argument
+    return render(request, 'authapp/dashboard.html', context=context)           # render the home page url
 
 
 
 
-@permission_required('authapp.add_item', raise_exception=True)
-@login_required
-def model_form_upload(request):
-    if request.method == 'POST':
-        form = GraphicForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+@permission_required('authapp.add_item', raise_exception=True)                  # Permission docerator 'admin' for uploading new product
+@login_required                                                                 # Login requirment to upload new product
+def model_form_upload(request):                                                 # Adding product view
+    if request.method == 'POST':                                                # Check if a request method is Post
+        form = GraphicForm(request.POST, request.FILES)                         # Parse the Post request to the product form as well as the files uploaded
+        if form.is_valid():                                                     # check if the form is valid
+            form.save()                                                         # save the information in the form
     else:
         form = GraphicForm()
-    return render(request, 'authapp/model_form_upload.html', {
+    return render(request, 'authapp/model_form_upload.html', {                  # render the upload html page to upload your product
         'form': form
     })
 
 
-@permission_required('authapp.update_item', raise_exception=True)
-@login_required
-def updateitem(request, pk):
-    graphiCards = GraphiCards.objects.get(id=pk)
-    form = GraphicForm(instance=graphiCards)
+@permission_required('authapp.update_item', raise_exception=True)                # Permission docerator 'admin' for modyfing a product
+@login_required                                                                  # Login requirment to update a product
+def updateitem(request, pk):                                                     # Product modyfing view
+    graphiCards = GraphiCards.objects.get(id=pk)                                 # Get all the information from the product model with primary key
+    form = GraphicForm(instance=graphiCards)                                     # Get the form of the product
 
-    if request.method == 'POST':
-        form = GraphicForm(request.POST, request.FILES, instance=graphiCards)
-        if form.is_valid():
-            form.save()
+    if request.method == 'POST':                                                 # Check if the post condition
+        form = GraphicForm(request.POST, request.FILES, instance=graphiCards)    # Parse a post request, files to product form with product's instance
+        if form.is_valid():                                                      # check if the form is valid
+            form.save()                                                          # save the form
             next_ = request.POST.get('next', '/')
             return HttpResponseRedirect(next_)
 
-    context = {'orders': form}
+    context = {'orders': form}                                                   # Creating a dictionary to pass as an argument
     print(form)
     return render(request, 'authapp/update_item.html', context)
 
 
-@permission_required('authapp.delete_item', raise_exception=True)
-@login_required
-def delete_item(request, pk):
-    order = GraphiCards.objects.get(id=pk)
-    if request.method == "POST":
-        order.delete()
-        return redirect('/dashboard/')
-    context = {'item': order}
+@permission_required('authapp.delete_item', raise_exception=True)                 # Permission docerator 'admin' for deleting a product
+@login_required                                                                   # Login requirment to delete a product
+def delete_item(request, pk):                                                     # delete product from home page view
+    order = GraphiCards.objects.get(id=pk)                                        # Get all the information from the product model with primary key
+    if request.method == "POST":                                                  # Check if request method is post
+        order.delete()                                                            # delete the product
+        return redirect('/dashboard/')                                            # return to home page
+    context = {'item': order}                                                     # Creating a dictionary to pass as an argument
     return render(request, 'authapp/delete_item.html', context)
 
 
@@ -140,34 +138,17 @@ def item_clear(request, id):
     product.save()
     return render(request, 'authapp/cart.html')
 
-
 @login_required
-def item_increment(request, id):
-    cart = Cart(request)
-    product = GraphiCards.objects.get(id=id)
-    cart.add(product=product)
-    return redirect("cart_detail")
-
-
-@login_required
-def item_decrement(request, id):
-    cart = Cart(request)
-    product = GraphiCards.objects.get(id=id)
-    cart.decrement(product=product)
-    return redirect("/")
-
-
-@login_required
-def cart_clear(request):
-    cart = Cart(request)
+def cart_clear(request):                                                        # clear cart view
+    cart = Cart(request)                                                        # Parse request to the cart model
     print("---------herree-------------")
     print(cart.cart)
-    cart.clear()
-    return render(request, 'authapp/cart.html')
+    cart.clear()                                                                 # remove products from the cart
+    return render(request, 'authapp/cart.html')                                  # render the cart details
 
 
 @login_required
-def cart_detail(request):
-    return render(request, 'authapp/cart.html')
+def cart_detail(request):                                                         # cart detail's view
+    return render(request, 'authapp/cart.html')                                   # Render the cart details
 
 
